@@ -16,7 +16,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.title = @"Demo";
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    // 打印所有子视图
+    [self getSub:self.navigationController.navigationBar andLevel:1];
+}
+
+// 递归获取子视图
+- (void)getSub:(UIView *)view andLevel:(int)level {
+    NSArray *subviews = [view subviews];
+    
+    // 如果没有子视图就直接返回
+    if ([subviews count] == 0) return;
+    
+    for (UIView *subview in subviews) {
+        
+        // 根据层级决定前面空格个数，来缩进显示
+        NSString *blank = @"";
+        for (int i = 1; i < level; i++) {
+            blank = [NSString stringWithFormat:@"  %@", blank];
+        }
+        
+        // 打印子视图类名
+        NSLog(@"%@%d: %@", blank, level, subview.class);
+        
+        // 递归获取此视图的子视图
+        [self getSub:subview andLevel:(level+1)];
+        
+    }
 }
 
 
